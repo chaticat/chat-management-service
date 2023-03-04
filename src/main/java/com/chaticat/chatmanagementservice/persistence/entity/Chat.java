@@ -28,6 +28,8 @@ public class Chat extends AbstractVersional {
     @Column(name = "icon_url")
     private String iconUrl;
 
+    private Boolean isPublic;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "chats_participants",
             joinColumns = @JoinColumn(name = "chat_id"),

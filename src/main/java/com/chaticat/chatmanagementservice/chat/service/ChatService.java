@@ -42,7 +42,7 @@ public class ChatService {
                 .toList();
 
         chatResponse.setParticipants(participants);
-        chatResponse.setGroup(participants.size() > 2);
+        chatResponse.setGroup(participants.size() < 3);
 
         return chatResponse;
     }
@@ -58,7 +58,7 @@ public class ChatService {
     @Transactional
     public ChatResponse createChatWithUser(UUID userId) {
         User endUser = userService.getUserById(userId);
-        UUID currentUserId = UUID.fromString("c5d2cf00-c787-476c-9ea9-d4fb84d226aa");
+        UUID currentUserId = UUID.fromString("bf2debf2-e1a1-4069-a52b-57b18a2726c7");
         User currentUser = userService.getUserById(currentUserId);
 
         Chat chat = new Chat();
@@ -73,7 +73,7 @@ public class ChatService {
 
     @Transactional
     public ChatResponse createEmptyChat(EmptyChatRequest request) {
-        UUID currentUserId = UUID.fromString("c5d2cf00-c787-476c-9ea9-d4fb84d226aa");
+        UUID currentUserId = UUID.fromString("bf2debf2-e1a1-4069-a52b-57b18a2726c7");
         User currentUser = userService.getUserById(currentUserId);
 
         Chat chat = new Chat();
