@@ -7,6 +7,7 @@ import com.chaticat.chatmanagementservice.persistence.entity.Chat;
 import com.chaticat.chatmanagementservice.persistence.entity.User;
 import com.chaticat.chatmanagementservice.persistence.repository.ChatRepository;
 import com.chaticat.chatmanagementservice.user.service.UserService;
+import com.chaticat.chatmanagementservice.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,8 +59,7 @@ public class ChatService {
     @Transactional
     public ChatResponse createChatWithUser(UUID userId) {
         User endUser = userService.getUserById(userId);
-        UUID currentUserId = UUID.fromString("bf2debf2-e1a1-4069-a52b-57b18a2726c7");
-        User currentUser = userService.getUserById(currentUserId);
+        User currentUser = userService.getUserById(SecurityUtil.getCurrentUserId());
 
         Chat chat = new Chat();
         chat.setName(endUser.getUsername());
@@ -73,8 +73,7 @@ public class ChatService {
 
     @Transactional
     public ChatResponse createEmptyChat(EmptyChatRequest request) {
-        UUID currentUserId = UUID.fromString("bf2debf2-e1a1-4069-a52b-57b18a2726c7");
-        User currentUser = userService.getUserById(currentUserId);
+        User currentUser = userService.getUserById(SecurityUtil.getCurrentUserId());
 
         Chat chat = new Chat();
         chat.setName(request.getName());
