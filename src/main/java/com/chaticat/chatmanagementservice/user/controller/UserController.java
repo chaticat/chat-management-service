@@ -1,25 +1,32 @@
 package com.chaticat.chatmanagementservice.user.controller;
 
-import com.chaticat.chatmanagementservice.user.model.Contact;
+import com.chaticat.chatmanagementservice.user.model.UserDto;
 import com.chaticat.chatmanagementservice.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/contacts")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
-    public List<Contact> getAllUserContacts() {
+    @GetMapping("/contacts")
+    public List<UserDto> getAllUserContacts() {
         return userService.getAllUserContacts();
+    }
+
+    @GetMapping("/search/username")
+    public Flux<UserDto> searchUsersByUsername(@RequestParam String searchText) {
+        return userService.searchUsersByUsername(searchText);
     }
 }

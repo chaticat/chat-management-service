@@ -35,6 +35,13 @@ public class UserPrincipal implements UserDetails {
                 user.getPassword());
     }
 
+    public static UserPrincipal create(UUID id) {
+        return new UserPrincipal(
+                id,
+                null,
+                null);
+    }
+
     @Override
     public String getUsername() {
         return username;

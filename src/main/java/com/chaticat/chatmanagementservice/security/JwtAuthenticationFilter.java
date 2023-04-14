@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -33,9 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     && tokenProvider.checkExpirationAccessToken(refreshToken)) {
                 UUID userId = tokenProvider.getUserIdFromToken(accessToken);
 
-                UserDetails userDetails = customUserDetailsService.loadUserById(userId);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                var userPrincipal = UserPrincipal.create(userId);
+                var authentication = new UsernamePasswordAuthenticationToken(userPrincipal, null, List.of());
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

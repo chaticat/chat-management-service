@@ -3,6 +3,7 @@ package com.chaticat.chatmanagementservice.chat.controller;
 import com.chaticat.chatmanagementservice.chat.model.ChatResponse;
 import com.chaticat.chatmanagementservice.chat.model.EmptyChatRequest;
 import com.chaticat.chatmanagementservice.chat.service.ChatService;
+import com.chaticat.chatmanagementservice.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,8 +29,7 @@ public class ChatController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     private List<ChatResponse> getAllChatsForCurrentUser() {
-        UUID currentUserId = UUID.fromString("bf2debf2-e1a1-4069-a52b-57b18a2726c7");
-        return chatService.getAllChatsForUser(currentUserId);
+        return chatService.getAllChatsForUser(SecurityUtil.getCurrentUserId());
     }
 
     @PostMapping("/{userId}")

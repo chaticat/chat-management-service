@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class Contact {
+public class UserDto {
 
     private UUID id;
     private String username;
