@@ -4,6 +4,7 @@ import com.chaticat.chatmanagementservice.security.CustomUserDetailsService;
 import com.chaticat.chatmanagementservice.security.JwtAuthenticationEntryPoint;
 import com.chaticat.chatmanagementservice.security.JwtAuthenticationFilter;
 import com.chaticat.chatmanagementservice.security.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final JwtTokenProvider tokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -58,7 +60,9 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, customUserDetailsService, objectMapper), UsernamePasswordAuthenticationFilter.class)
+                .cors()
+                .and()
                 .build();
     }
 
