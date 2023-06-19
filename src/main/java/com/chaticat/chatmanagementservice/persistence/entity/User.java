@@ -31,6 +31,9 @@ public class User extends AbstractVersional {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "private")
+    private Boolean isPrivate = false;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_contacts",
             joinColumns = @JoinColumn(name = "user_id"),

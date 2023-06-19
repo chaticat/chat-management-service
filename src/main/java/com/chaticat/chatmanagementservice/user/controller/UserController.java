@@ -3,7 +3,6 @@ package com.chaticat.chatmanagementservice.user.controller;
 import com.chaticat.chatmanagementservice.user.model.UserDto;
 import com.chaticat.chatmanagementservice.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +11,6 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/search/username")
-    public Flux<UserDto> searchUsersByUsername(@RequestParam String searchText) {
-        return userService.searchUsersByUsername(searchText);
+    public Flux<UserDto> searchUsersByUsername(@RequestParam String searchText, @RequestParam boolean global) {
+        return userService.searchUsersByUsername(searchText, global);
     }
 }
